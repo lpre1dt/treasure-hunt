@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Challenge {{.challengeID}} - Team eingeben</title>
+    <title>Challenge {{.challengeID}} - Team auswählen</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -36,7 +36,10 @@
             margin-bottom: 30px;
         }
 
-        input[type="text"] {
+        /* Altes Input-Styling entfernt */
+
+        /* Styling für das neue Dropdown */
+        select {
             width: 100%;
             padding: 12px;
             font-size: 16px;
@@ -44,9 +47,19 @@
             border-radius: 8px;
             margin-bottom: 20px;
             box-sizing: border-box;
+            background-color: white;
+            cursor: pointer;
+            /* Entfernt Standard-Pfeil und fügt eigenen hinzu */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23667eea%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 0.8em;
         }
 
-        input[type="text"]:focus {
+        select:focus {
             outline: none;
             border-color: #667eea;
         }
@@ -83,12 +96,18 @@
         <div class="challenge-badge">Challenge ID: {{.challengeID}}</div>
 
         <form action="/next/{{.challengeID}}" method="POST">
-            <input type="text" name="team" placeholder="Teamname eingeben" required autofocus>
+            <!-- Ersetztes Textfeld durch Dropdown -->
+            <select name="team" required>
+                <option value="" disabled selected>Team auswählen...</option>
+                {{range .Teams}}
+                <option value="{{.}}">{{.}}</option>
+                {{end}}
+            </select>
             <button type="submit">Weiter zur nächsten Challenge →</button>
         </form>
 
         <div class="info">
-            Gebt euren Teamnamen ein (wie in Notion hinterlegt),<br>
+            Wählt euren Teamnamen aus,<br>
             um zur nächsten Challenge zu gelangen.
         </div>
     </div>

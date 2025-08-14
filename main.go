@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sort"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -81,13 +82,60 @@ func (app *App) handleHome(c *gin.Context) {
 	}
 }
 
-// handleChallengeForm zeigt Formular für Teamname-Eingabe
+// getAllTeamNames holt alle Teamnamen aus der Notion DB
+func (app *App) getAllTeamNames() ([]string, error) {
+	ctx := context.Background()
+	var teamNames []string
+
+	// Query, um alle Seiten aus der Team-DB zu holen
+	query := &notionapi.DatabaseQueryRequest{
+		PageSize: 100, // Annahme: Es gibt nicht mehr als 100 Teams
+	}
+
+	result, err := app.notion.Database.Query(ctx, notionapi.DatabaseID(app.teamsDBID), query)
+	if err != nil {
+		return nil, fmt.Errorf("fehler beim Abfragen der Team-Datenbank: %w", err)
+	}
+
+	// Iteriere durch die Ergebnisse und extrahiere den Titel jeder Seite
+	for _, page := range result.Results {
+		// Die Titel-Eigenschaft hat keinen festen Namen, sie wird durch ihren Typ identifiziert.
+		for _, prop := range page.Properties {
+			if titleProp, ok := prop.(*notionapi.TitleProperty); ok {
+				if len(titleProp.Title) > 0 {
+					teamNames = append(teamNames, titleProp.Title[0].PlainText)
+					break // Nächste Seite, da wir den Titel gefunden haben
+				}
+			}
+		}
+	}
+
+	if len(teamNames) == 0 {
+		return nil, fmt.Errorf("keine Teams in der Datenbank gefunden")
+	}
+
+	// Sortiere die Teamnamen alphabetisch
+	sort.Strings(teamNames)
+
+	return teamNames, nil
+}
+
+// handleChallengeForm zeigt Formular für Teamname-Eingabe mit Dropdown
 func (app *App) handleChallengeForm(c *gin.Context) {
 	challengeID := c.Param("id")
+
+	// Alle Teamnamen aus Notion für das Dropdown holen
+	teamNames, err := app.getAllTeamNames()
+	if err != nil {
+		log.Printf("Fehler beim Abrufen der Teamnamen: %v", err)
+		c.String(http.StatusInternalServerError, "Fehler beim Laden der Teamliste: %v", err)
+		return
+	}
 
 	c.Header("Content-Type", "text/html; charset=utf-8")
 	if err := app.templates.ExecuteTemplate(c.Writer, "teamform.html", gin.H{
 		"challengeID": challengeID,
+		"Teams":       teamNames, // Teamliste an das Template übergeben
 	}); err != nil {
 		c.String(http.StatusInternalServerError, "Template-Fehler: %v", err)
 	}
