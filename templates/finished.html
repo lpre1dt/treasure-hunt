@@ -1,0 +1,89 @@
+<!-- templates/finished.html -->
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schnitzeljagd abgeschlossen!</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        .trophy {
+            font-size: 80px;
+            margin: 30px 0;
+        }
+
+        .team-name {
+            color: #f5576c;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        .message {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .confetti {
+            font-size: 30px;
+            margin: 20px 0;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        a:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="trophy">🏆</div>
+        <h1>Glückwunsch!</h1>
+        <div class="team-name">Team {{.team}}</div>
+        <div class="message">
+            Ihr habt alle Challenges erfolgreich gemeistert!<br>
+            Die Schnitzeljagd ist abgeschlossen.
+        </div>
+        <div class="confetti">🎉 🎊 🎉</div>
+        <a href="/">Zurück zum Start</a>
+    </div>
+</body>
+
+</html>
