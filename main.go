@@ -355,7 +355,7 @@ func (app *App) findNextChallengeURL(challenges map[int]string, currentID string
 					cleanID += string(c)
 				}
 			}
-			return fmt.Sprintf("https://roasted-ridge-6e0.notion.site/%s", cleanID)
+			return fmt.Sprintf("https://marcbaumholz.notion.site/%s", cleanID)
 		}
 	}
 
