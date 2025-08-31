@@ -1,11 +1,11 @@
 <!-- templates/index.html -->
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schnitzeljagd - Start</title>
+    <title>Treasure Hunt - Start</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -72,14 +72,14 @@
 
 <body>
     <div class="container">
-        <h1>🎯 Schnitzeljagd</h1>
+        <h1>🎯 Treasure Hunt</h1>
         <form action="/next" method="POST">
-            <input type="text" name="team" placeholder="Teamname eingeben" required autofocus>
+            <input type="text" name="team" placeholder="Enter team name" required autofocus>
             <input type="hidden" name="challenge_id" value="">
-            <button type="submit">Weiter zur ersten Challenge →</button>
+            <button type="submit">Continue to the first challenge →</button>
         </form>
         <div class="info">
-            Gebt euren Teamnamen ein, um mit der Schnitzeljagd zu beginnen!
+            Enter your team name to start the Treasure Hunt!
         </div>
     </div>
 </body>
@@ -88,12 +88,12 @@
 
 <!-- templates/next.html -->
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nächste Challenge</title>
+    <title>Next Challenge</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -189,13 +189,13 @@
 
 <body>
     <div class="container">
-        <h1>🎯 Nächste Challenge</h1>
+        <h1>🎯 Next Challenge</h1>
         <div class="team-name">Team: {{.team}}</div>
 
         <div class="challenge-box">
             <div class="challenge-title">{{.challengeName}}</div>
             <a href="https://notion.so/{{.challengeID}}" target="_blank" class="challenge-link">
-                Challenge öffnen →
+                Open Challenge →
             </a>
         </div>
 
@@ -203,12 +203,12 @@
             <form action="/next" method="POST">
                 <input type="hidden" name="team" value="{{.team}}">
                 <input type="hidden" name="challenge_id" value="{{.challengeID}}">
-                <button type="submit">✅ Challenge abgeschlossen - Weiter zur nächsten</button>
+                <button type="submit">✅ Challenge completed - Continue to the next</button>
             </form>
         </div>
 
         <div class="info">
-            Öffnet die Challenge, löst sie und kommt dann hierher zurück!
+            Open the challenge, solve it, and then come back here!
         </div>
     </div>
 </body>
@@ -217,12 +217,12 @@
 
 <!-- templates/finished.html -->
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schnitzeljagd abgeschlossen!</title>
+    <title>Treasure Hunt Completed!</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -292,14 +292,14 @@
 <body>
     <div class="container">
         <div class="trophy">🏆</div>
-        <h1>Glückwunsch!</h1>
+        <h1>Congratulations!</h1>
         <div class="team-name">Team {{.team}}</div>
         <div class="message">
-            Ihr habt alle Challenges erfolgreich gemeistert!<br>
-            Die Schnitzeljagd ist abgeschlossen.
+            You successfully mastered all challenges!<br>
+            The Treasure Hunt is completed.
         </div>
         <div class="confetti">🎉 🎊 🎉</div>
-        <a href="/">Zurück zum Start</a>
+        <a href="/">Back to Start</a>
     </div>
 </body>
 
@@ -307,7 +307,7 @@
 
 <!-- templates/challenge.html -->
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -335,7 +335,7 @@
 
 <body>
     <div class="redirect">
-        <h2>Weiterleitung zur Challenge...</h2>
+        <h2>Redirecting to Challenge...</h2>
         <p>Team: {{.team}}</p>
     </div>
     <script>

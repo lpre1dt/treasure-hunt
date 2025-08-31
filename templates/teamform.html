@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Challenge {{.challengeID}} - Team auswählen</title>
+    <title>Challenge {{.challengeID}} - Select Team</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -36,9 +36,6 @@
             margin-bottom: 30px;
         }
 
-        /* Altes Input-Styling entfernt */
-
-        /* Styling für das neue Dropdown */
         select {
             width: 100%;
             padding: 12px;
@@ -49,7 +46,6 @@
             box-sizing: border-box;
             background-color: white;
             cursor: pointer;
-            /* Entfernt Standard-Pfeil und fügt eigenen hinzu */
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
@@ -92,23 +88,22 @@
 
 <body>
     <div class="container">
-        <h1>🎯 Challenge abgeschlossen?</h1>
+        <h1>🎯 Challenge completed?</h1>
         <div class="challenge-badge">Challenge ID: {{.challengeID}}</div>
 
         <form action="/next/{{.challengeID}}" method="POST">
-            <!-- Ersetztes Textfeld durch Dropdown -->
             <select name="team" required>
-                <option value="" disabled selected>Team auswählen...</option>
+                <option value="" disabled selected>Select team...</option>
                 {{range .Teams}}
                 <option value="{{.}}">{{.}}</option>
                 {{end}}
             </select>
-            <button type="submit">Weiter zur nächsten Challenge →</button>
+            <button type="submit">Continue to the next challenge →</button>
         </form>
 
         <div class="info">
-            Wählt euren Teamnamen aus,<br>
-            um zur nächsten Challenge zu gelangen.
+            Select your team name<br>
+            to proceed to the next challenge.
         </div>
     </div>
 </body>
