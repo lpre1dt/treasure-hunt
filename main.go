@@ -10,6 +10,8 @@ import (
 	"os"
 	"sort"
 
+	"math/rand"
+
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/jomei/notionapi"
@@ -64,6 +66,7 @@ func main() {
 	r.GET("/", app.handleHome)
 	r.GET("/next/:id", app.handleChallengeForm)
 	r.POST("/next/:id", app.handleNextChallenge)
+	r.GET("/mvpgenerator", app.handleMVPGenerator)
 
 	// Server starten
 	port := os.Getenv("PORT")
@@ -118,6 +121,131 @@ func (app *App) getAllTeamNames() ([]string, error) {
 	sort.Strings(teamNames)
 
 	return teamNames, nil
+}
+func (app *App) handleMVPGenerator(c *gin.Context) {
+
+	// MVP-Generierung starten
+	app.generateMVP(c)
+
+}
+func (app *App) generateMVP(c *gin.Context) {
+	// Beispiel-MVP-Generierung (hier könnte eine komplexere Logik stehen)
+	mvpArray := []string{
+		"Portable Water Filter",
+		"Eco-Friendly Phone Stand",
+		"Leaf-Based Notebook",
+		"Natural Air Freshener",
+		"Solar-Powered Lantern",
+		"Pocket-Sized Board Game",
+		"Mini Bird Feeder",
+		"Portable Hammock",
+		"Eco Speaker Amplifier",
+		"Handmade Jewelry",
+		"Biodegradable Straw",
+		"Reusable Cutlery Set",
+		"Eco Toy Car",
+		"Compostable Food Container",
+		"Emergency Shelter Kit",
+		"Natural Bandage",
+		"Seed-Paper Business Card",
+		"Upcycled Coin Wallet",
+		"Outdoor Chess Set",
+		"DIY Kite",
+		"Portable Plant Pot",
+		"Zero-Waste Picnic Kit",
+		"Wind Chime",
+		"Stress Relief Toy",
+		"Eco Bracelet",
+		"Paper Recycling Kit",
+		"Biodegradable Soap Holder",
+		"Natural Toothbrush",
+		"Eco-Friendly Bag",
+		"Outdoor Survival Kit",
+		"Pocket Garden",
+		"Park-Themed Board Game",
+		"Compost Bin Prototype",
+		"Mini Solar Oven",
+		"Eco-Friendly Candle",
+		"Toy Drone Shell",
+		"Bird Call Whistle",
+		"Outdoor Gym Equipment",
+		"Eco Keychain",
+		"Rainwater Collector",
+		"DIY Frisbee",
+		"Eco Sunglasses",
+		"Reusable Coffee Sleeve",
+		"Portable Charger Holder",
+		"Nature Bookmark",
+		"Toy Boat",
+		"DIY Musical Instrument",
+		"Eco-Friendly Packaging",
+		"Foldable Stool",
+		"Eco Travel Mug",
+		"Mini Wind Turbine",
+		"Outdoor Meditation Mat",
+		"Portable Whiteboard",
+		"Emergency Cooking Stove",
+		"Toy Puzzle",
+		"Nature Art Frame",
+		"Eco Phone Case",
+		"Reusable Water Filter Straw",
+		"Picnic Blanket Prototype",
+		"Eco Bag Tag",
+		"DIY Pen Holder",
+		"Eco-Friendly Wallet",
+		"Upcycled Backpack",
+		"Biodegradable Plant Pot",
+		"Eco Toothpaste Holder",
+		"DIY Notebook",
+		"Park Cleaning Kit",
+		"Eco Coaster",
+		"Portable Light Reflector",
+		"Outdoor Cooking Kit",
+		"Eco-Friendly Umbrella",
+		"Eco-Friendly Badge",
+		"Mini Greenhouse",
+		"Eco-Friendly Soap Dish",
+		"Outdoor Relaxation Chair",
+		"Toy Rocket",
+		"Eco-Friendly Speaker",
+		"DIY Lamp",
+		"Eco-Friendly Calendar",
+		"Nature Camera Case",
+		"Eco-Friendly Shoes",
+		"Eco-Friendly Gloves",
+		"Outdoor Game Dice",
+		"DIY Jewelry Box",
+		"Eco Candle Holder",
+		"Portable Fire Starter",
+		"Eco Ashtray",
+		"Reusable Straw Holder",
+		"DIY Sunglass Holder",
+		"Eco Plant Sprayer",
+		"Toy Airplane",
+		"Mini Compost Bag",
+		"Eco-Friendly Watch",
+		"Portable Raincoat",
+		"Eco Pencil Case",
+		"Outdoor Card Game",
+		"Toy Binoculars",
+		"Eco Lantern",
+		"Pocket First Aid Kit",
+		"Eco Water Bottle",
+		"Eco Blanket",
+	}
+	// Zufälliges MVP auswählen
+	mvp := mvpArray[randRange(0, len(mvpArray))]
+
+	// Ergebnis an das Template übergeben
+	c.Header("Content-Type", "text/html; charset=utf-8")
+	if err := app.templates.ExecuteTemplate(c.Writer, "mvpgenerator.html", gin.H{
+		"mvp": mvp,
+	}); err != nil {
+		c.String(http.StatusInternalServerError, "Template-Fehler: %v", err)
+	}
+}
+func randRange(min, max int) int {
+	return rand.Intn(max-min) + min
 }
 
 // handleChallengeForm zeigt Formular für Teamname-Eingabe mit Dropdown
